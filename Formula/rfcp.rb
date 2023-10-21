@@ -10,6 +10,6 @@ class Rfcp < Formula
   end
 
   test do
-    system "#{bin}/rfcp --help"
+    system "#{bin}/rfcp" "--help"
   end
 end
