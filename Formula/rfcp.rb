@@ -1,8 +1,8 @@
 class Rfcp < Formula
-  desc "A faster and more eficent command to copy files than CP"
+  desc "A faster and more efficient command to copy files than CP"
   homepage "https://github.com/keaz/rust-copy"
-  url "https://github.com/keaz/rust-copy/releases/download/v0.2.2/rfcp"
-  sha256 "649bbba1d6f05439a80d1e6fb65e6a4fd7430a345f0aee7057ef35329e392c29"
+  url "https://github.com/keaz/rust-copy/releases/download/v1.0.0/rfcp"
+  sha256 "8b81511a4f2822b12234226a0d9279a8abdd4100897ecbbbccff72f857f85e37"
   license "MIT/Apache-2.0"
 
   def install
