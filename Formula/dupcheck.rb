@@ -1,4 +1,4 @@
-class Rfcp < Formula
+class Dupcheck < Formula
   desc "A duplicate file discovery tool written in Rust."
   homepage "https://github.com/keaz/rust-duplicate-file-detector"
   url "https://github.com/keaz/rust-duplicate-file-detector/releases/download/v2.0.2/duplicate-checker"
