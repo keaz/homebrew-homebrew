@@ -1,4 +1,4 @@
-class Kcli < Formula
+class Kfcli < Formula
   desc "A CLI tool to monitor Kafka topics and produce/consume messages"
   homepage "https://github.com/keaz/kcli"
   url "https://github.com/keaz/kcli/releases/download/v0.1.0-alpha/kcli"
@@ -7,10 +7,11 @@ class Kcli < Formula
   version "0.1.0-alpha"
 
   def install
-    bin.install "kcli"
+    bin.install "kfcli-macos"
+    mv bin/"kfcli-macos", bin/"kfcli"
   end
 
   test do
-    system "#{bin}/kcli" "--help"
+    system "#{bin}/kfcli", "-h"
   end
 end
