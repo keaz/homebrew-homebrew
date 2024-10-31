@@ -1,0 +1,30 @@
+name: Update Homebrew Formula
+
+on:
+  repository_dispatch:
+    types: [update-kcli-formula]
+
+jobs:
+  update-kcli-formula:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the formula repository
+        uses: actions/checkout@v3
+
+      - name: Update Formula File
+        id: update-kcli-formula
+        run: |
+          TAG="${{ github.event.client_payload.tag }}"
+          DOWNLOAD_URL="${{ github.event.client_payload.download_url }}"
+          
+          sed -i "s|url \".*\"|url \"${DOWNLOAD_URL}\"|g" Formula/kcli.rb
+          sed -i "s|version \".*\"|version \"${TAG}\"|g" Formula/kcli.rb
+
+      - name: Commit and Push Changes
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git commit -am "Update kcli formula to version ${{ github.event.client_payload.tag }}"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
