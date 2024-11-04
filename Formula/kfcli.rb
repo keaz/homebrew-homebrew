@@ -4,7 +4,6 @@ class Kfcli < Formula
   url "https://github.com/keaz/kcli/releases/download/v0.0.1-alpha/kfcli-macos"
   version "v0.0.1-alpha"
   license "GPL-3.0"
-  version "v0.0.1-alpha"
 
   def install
     bin.install "kfcli-macos"
