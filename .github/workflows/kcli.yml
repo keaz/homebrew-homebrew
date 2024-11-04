@@ -22,7 +22,7 @@ jobs:
           
           sed -i "s|url \".*\"|url \"${DOWNLOAD_URL}\"|g" Formula/kfcli.rb
           sed -i "s|version \".*\"|version \"${TAG}\"|g" Formula/kfcli.rb
-          sed -i "s|sha256 \".*\"|version \"${SHA}\"|g" Formula/kfcli.rb          
+          sed -i "s|sha256 \".*\"|sha \"${SHA}\"|g" Formula/kfcli.rb          
 
       - name: Commit and Push Changes
         run: |
