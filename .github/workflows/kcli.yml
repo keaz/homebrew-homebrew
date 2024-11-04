@@ -18,9 +18,9 @@ jobs:
           DOWNLOAD_URL="${{ github.event.client_payload.download_url }}"
           SHA="${{ github.event.client_payload.sha }}"
           
-          sed -i "s|url \".*\"|url \"${DOWNLOAD_URL}\"|g" Formula/kcli.rb
-          sed -i "s|version \".*\"|version \"${TAG}\"|g" Formula/kcli.rb
-          sed -i "s|sha256 \".*\"|version \"${SHA}\"|g" Formula/kcli.rb          
+          sed -i "s|url \".*\"|url \"${DOWNLOAD_URL}\"|g" Formula/kfcli.rb
+          sed -i "s|version \".*\"|version \"${TAG}\"|g" Formula/kfcli.rb
+          sed -i "s|sha256 \".*\"|version \"${SHA}\"|g" Formula/kfcli.rb          
 
       - name: Commit and Push Changes
         run: |
