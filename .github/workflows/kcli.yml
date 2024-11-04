@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Check out the formula repository
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
 
       - name: Update Formula File
         id: update-kcli-formula
