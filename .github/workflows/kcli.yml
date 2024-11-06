@@ -20,19 +20,18 @@ jobs:
           DOWNLOAD_URL="${{ github.event.client_payload.download_url }}"
           SHA="${{ github.event.client_payload.sha }}"
           
-          sed -i.bak "s|url \".*\"|url \"${DOWNLOAD_URL}\"|g" Formula/kfcli.rb
-          sed -i.bak "s|version \".*\"|version \"${TAG}\"|g" Formula/kfcli.rb
-          sed -i.bak "s|sha256 \".*\"|sha256 \"${SHA}\"|g" Formula/kfcli.rb
-
-          rm -f Formula/*.bak
+          sed -i "s|url \".*\"|url \"${DOWNLOAD_URL}\"|g" ./Formula/kfcli.rb
+          sed -i "s|version \".*\"|version \"${TAG}\"|g" ./Formula/kfcli.rb
+          sed -i "s|sha256 \".*\"|sha256 \"${SHA}\"|g" ./Formula/kfcli.rb
 
       - name: Commit and Push Changes
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git diff
-          git add *
-          git commit -am "Update kfcli formula to version ${{ github.event.client_payload.tag }}"
+          git status
+          git add Formula/kfcli.rb
+          git commit -m "Update kfcli formula to version ${{ github.event.client_payload.tag }}"
           git push
+
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
