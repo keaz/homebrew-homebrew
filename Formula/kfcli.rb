@@ -1,9 +1,9 @@
 class Kfcli < Formula
   desc "A CLI tool to monitor Kafka topics and produce/consume messages"
   homepage "https://github.com/keaz/kcli"
-  url "https://github.com/keaz/kcli/releases/download/v0.0.3-alpha/kfcli-macos"
-  version "v0.0.3-alpha"
-  sha256 "d0a22a29fdc8a5bb183d926137cc70ba5c33f55fceaf5c67df4d4c599fdb2756"
+  url "https://github.com/keaz/kcli/releases/download/v0.0.4-alpha/kfcli-macos"
+  version "v0.0.4-alpha"
+  sha256 "e47abd3dff05f7715e3f635331e5d160a1570edcb21d56a4db04980ebd817de0"
   license "GPL-3.0"
 
   def install
