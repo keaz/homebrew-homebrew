@@ -9,6 +9,18 @@ class Kfcli < Formula
   def install
     bin.install "kfcli-macos"
     mv bin/"kfcli-macos", bin/"kfcli"
+
+    if ENV["SHELL"].include?("zsh")
+      system "#{bin}/kfcli", "completion", "zsh"
+      system "mv", ".zfunc", "#{ENV["HOME"]}/.zfunc"
+      system "echo 'fpath=(~/.zfunc $fpath)' >> ~/.zshrc"
+      system "echo 'autoload -Uz compinit && compinit' >> ~/.zshrc"
+      system "source ~/.zshrc"
+    elsif ENV["SHELL"].include?("bash")
+      system "#{bin}/kfcli", "completion", "bash"
+    else
+      system "echo The shell is neither zsh nor bash"
+    end
   end
 
   test do
