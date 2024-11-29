@@ -15,7 +15,7 @@ class Kfcli < Formula
       system "mv", ".zfunc", "#{ENV["HOME"]}/.zfunc"
       system "echo 'fpath=(~/.zfunc $fpath)' >> ~/.zshrc"
       system "echo 'autoload -Uz compinit && compinit' >> ~/.zshrc"
-      system "source ~/.zshrc"
+      system "source", "~/.zshrc"
     elsif ENV["SHELL"].include?("bash")
       system "#{bin}/kfcli", "completion", "bash"
     else
