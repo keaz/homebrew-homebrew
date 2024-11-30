@@ -11,16 +11,22 @@ class Kfcli < Formula
     mv bin/"kfcli-macos", bin/"kfcli"
 
     if ENV["SHELL"].include?("zsh")
-      system "mkdir", "#{ENV["HOME"]}/.zfunc"
-      system "curl", "-o", "#{ENV["HOME"]}/.zfunc/_kfcli", "https://raw.githubusercontent.com/keaz/kcli/refs/heads/main/.zfunc/_kfcli"
+      system "mkdir", "-p" , "~/.zfunc"
+      system "curl", "-o", "~/.zfunc/_kfcli", "https://raw.githubusercontent.com/keaz/kcli/refs/heads/main/.zfunc/_kfcli"
       system "echo 'fpath=(~/.zfunc $fpath)' >> ~/.zshrc"
       system "echo 'autoload -Uz compinit && compinit' >> ~/.zshrc"
-      system "source", "~/.zshrc"
     elsif ENV["SHELL"].include?("bash")
       system "#{bin}/kfcli", "completion", "bash"
     else
       system "echo The shell is neither zsh nor bash"
     end
+  end
+
+  def caveats
+    <<~EOS
+      To enable zsh completion, please run:
+        source ~/.zshrc
+    EOS
   end
 
   test do
