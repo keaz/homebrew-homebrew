@@ -11,7 +11,6 @@ class Kfcli < Formula
     mv bin/"kfcli-macos", bin/"kfcli"
 
     if ENV["SHELL"].include?("zsh")
-      system "#{bin}/kfcli", "completion", "zsh"
       system "mkdir", "#{ENV["HOME"]}/.zfunc"
       system "curl", "-o", "#{ENV["HOME"]}/.zfunc/_kfcli", "https://raw.githubusercontent.com/keaz/kcli/refs/heads/main/.zfunc/_kfcli"
       system "echo 'fpath=(~/.zfunc $fpath)' >> ~/.zshrc"
