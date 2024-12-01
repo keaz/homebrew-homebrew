@@ -6,7 +6,7 @@ class Dupcheck < Formula
   license "MIT/Apache-2.0"
 
   def install
-    bin.install "duplicate-checker"
+    bin.install "duplicate-checker-macos"
     mv bin/"duplicate-checker-macos", bin/"duplicate-checker"
     if ENV["SHELL"].include?("zsh")
       system "mkdir", "-p" , "~/.zfunc"
