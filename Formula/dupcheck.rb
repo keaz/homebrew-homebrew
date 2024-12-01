@@ -1,7 +1,7 @@
 class Dupcheck < Formula
   desc "A duplicate file discovery tool written in Rust."
   homepage "https://github.com/keaz/rust-duplicate-file-detector"
-  url "https://github.com/keaz/rust-duplicate-file-detector/releases/download/main/duplicate-checker-macos"
+  url "https://github.com/keaz/rust-duplicate-file-detector/releases/download/v2.1.0/duplicate-checker-macos"
   sha256 "8d7f76a7c291da7949f3c8af133eded44e88a0023e44ead493761b4f969768d9"
   license "MIT/Apache-2.0"
 
