@@ -7,13 +7,14 @@ class Dupcheck < Formula
 
   def install
     bin.install "duplicate-checker"
+    mv bin/"duplicate-checker-macos", bin/"duplicate-checker"
     if ENV["SHELL"].include?("zsh")
       system "mkdir", "-p" , "~/.zfunc"
       system "curl", "-o", "~/.zfunc/_duplicate-checker", "https://raw.githubusercontent.com/keaz/rust-duplicate-file-detector/refs/heads/main/.zfunc/_duplicate-checker"
       system "echo 'fpath=(~/.zfunc $fpath)' >> ~/.zshrc"
       system "echo 'autoload -Uz compinit && compinit' >> ~/.zshrc"
     elsif ENV["SHELL"].include?("bash")
-      system "#{bin}/kfcli", "completion", "bash"
+      system "#{bin}/duplicate-checker", "completion", "bash"
     else
       system "echo The shell is neither zsh nor bash"
     end
