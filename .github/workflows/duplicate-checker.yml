@@ -1,0 +1,37 @@
+name: Update Duplicate Homebrew Formula
+
+on:
+  repository_dispatch:
+    types: [update-duplicate-checker-formula]
+
+jobs:
+  update-kcli-formula:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the formula repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
+
+      - name: Update Formula File
+        id: update-duplicate-checker-formula
+        run: |
+          TAG="${{ github.event.client_payload.tag }}"
+          DOWNLOAD_URL="${{ github.event.client_payload.download_url }}"
+          SHA="${{ github.event.client_payload.sha }}"
+          
+          sed -i "s|url \".*\"|url \"${DOWNLOAD_URL}\"|g" ./Formula/dupcheck.rb
+          sed -i "s|version \".*\"|version \"${TAG}\"|g" ./Formula/dupcheck.rb
+          sed -i "s|sha256 \".*\"|sha256 \"${SHA}\"|g" ./Formula/dupcheck.rb
+
+      - name: Commit and Push Changes
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git status
+          git add Formula/dupcheck.rb
+          git commit -m "Update dupcheck formula to version ${{ github.event.client_payload.tag }}"
+          git push
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
