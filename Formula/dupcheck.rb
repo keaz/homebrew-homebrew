@@ -9,7 +9,8 @@ class Dupcheck < Formula
     bin.install "duplicate-checker-macos"
     mv bin/"duplicate-checker-macos", bin/"duplicate-checker"
     if ENV["SHELL"].include?("zsh")
-      zshrc_path = File.join(Dir.home, ".zshrc")
+      real_home = ENV["HOMEBREW_REAL_HOME"] || Etc.getpwuid.dir
+      zshrc_path = File.join(real_home, ".zshrc")
 
       system "mkdir", "-p" , "~/.zfunc"
       system "curl", "-o", "~/.zfunc/_duplicate-checker", "https://raw.githubusercontent.com/keaz/rust-duplicate-file-detector/refs/heads/main/.zfunc/_duplicate-checker"
