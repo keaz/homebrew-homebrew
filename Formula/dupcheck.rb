@@ -9,13 +9,26 @@ class Dupcheck < Formula
     bin.install "duplicate-checker-macos"
     mv bin/"duplicate-checker-macos", bin/"duplicate-checker"
     if ENV["SHELL"].include?("zsh")
+      zshrc_path = File.join(Dir.home, ".zshrc")
+
       system "mkdir", "-p" , "~/.zfunc"
       system "curl", "-o", "~/.zfunc/_duplicate-checker", "https://raw.githubusercontent.com/keaz/rust-duplicate-file-detector/refs/heads/main/.zfunc/_duplicate-checker"
-      unless File.readlines("~/.zshrc").grep(/fpath=\(~\/.zfunc \$fpath\)/).any?
+      
+      zshrc_content = File.read(zshrc_path)
+      compinit_line = "autoload -Uz compinit && compinit"
+      fpath_line = "fpath=(~/.zfunc $fpath)"
+
+      unless zshrc_content.include?(fpath_line)
         system "echo 'fpath=(~/.zfunc $fpath)' >> ~/.zshrc"
+        puts "Added '#{fpath_line}' to .zshrc."
+      else
+        puts "'#{fpath_line}' already exists in .zshrc."
       end
-      unless File.readlines("~/.zshrc").grep(/autoload -Uz compinit && compinit/).any?
+      unless zshrc_content.include?(compinit_line)
         system "echo 'autoload -Uz compinit && compinit' >> ~/.zshrc"
+        puts "Added '#{compinit_line}' to .zshrc."
+      else
+        puts "'#{compinit_line}' already exists in .zshrc."
       end
     elsif ENV["SHELL"].include?("bash")
       system "#{bin}/duplicate-checker", "completion", "bash"
