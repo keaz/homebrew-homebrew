@@ -20,13 +20,19 @@ class Dupcheck < Formula
       fpath_line = "fpath=(~/.zfunc $fpath)"
 
       unless zshrc_content.include?(fpath_line)
-        system "echo 'fpath=(~/.zfunc $fpath)' >> ~/.zshrc"
+        File.open(zshrc_path, "a") do |file|
+          file.puts "\n"
+          file.puts fpath_line
+        end
         puts "Added '#{fpath_line}' to .zshrc."
       else
         puts "'#{fpath_line}' already exists in .zshrc."
       end
       unless zshrc_content.include?(compinit_line)
-        system "echo 'autoload -Uz compinit && compinit' >> ~/.zshrc"
+        File.open(zshrc_path, "a") do |file|
+          file.puts "\n"
+          file.puts compinit_line
+        end
         puts "Added '#{compinit_line}' to .zshrc."
       else
         puts "'#{compinit_line}' already exists in .zshrc."
