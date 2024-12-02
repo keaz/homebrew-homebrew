@@ -12,6 +12,9 @@ class Dupcheck < Formula
   def install
     bin.install "duplicate-checker-macos"
     mv bin/"duplicate-checker-macos", bin/"duplicate-checker"
+  end
+
+  def post_install
     if ENV["SHELL"].include?("zsh")
       real_home = ENV["HOMEBREW_REAL_HOME"] || Etc.getpwuid.dir
       zshrc_path = File.join(real_home, ".zshrc")
