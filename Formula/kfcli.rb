@@ -9,24 +9,35 @@ class Kfcli < Formula
   def install
     bin.install "kfcli-macos"
     mv bin/"kfcli-macos", bin/"kfcli"
-
-    if ENV["SHELL"].include?("zsh")
-      system "mkdir", "-p" , "~/.zfunc"
-      system "curl", "-o", "~/.zfunc/_kfcli", "https://raw.githubusercontent.com/keaz/kcli/refs/heads/main/.zfunc/_kfcli"
-      system "echo 'fpath=(~/.zfunc $fpath)' >> ~/.zshrc"
-      system "echo 'autoload -Uz compinit && compinit' >> ~/.zshrc"
-    elsif ENV["SHELL"].include?("bash")
-      system "#{bin}/kfcli", "completion", "bash"
-    else
-      system "echo The shell is neither zsh nor bash"
-    end
   end
 
   def caveats
-    <<~EOS
-      To enable zsh completion, please run:
+    if ENV["SHELL"].include?("zsh")
+      <<~EOS
+        To complete the setup, run the following commands:
+
+        mkdir -p ~/.zfunc
+        curl -o ~/.zfunc/_kfcli https://raw.githubusercontent.com/keaz/kcli/main/.zfunc/_kfcli
+        echo 'autoload -Uz compinit && compinit' >> ~/.zshrc
+        echo 'fpath=(~/.zfunc $fpath)' >> ~/.zshrc
         source ~/.zshrc
-    EOS
+
+        This will configure Zsh and download the required file.
+      EOS
+    elsif ENV["SHELL"].include?("bash")
+      <<~EOS
+        To complete the setup, run the following command:
+
+        mkdir -p ~/.bash_completion.d
+        curl -o ~/.bash_completion.d/kfcli https://raw.githubusercontent.com/keaz/kcli/main/.bash_completion.d/kfcli.bash
+        echo 'source ~/.bash_completion.d/kfcli' >> ~/.bashrc
+        source ~/.bashrc
+        
+        This will configure Bash and download the required file.
+      EOS
+    else
+      system "echo The shell is neither zsh nor bash"
+    end
   end
 
   test do
