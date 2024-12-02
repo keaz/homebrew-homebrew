@@ -1,3 +1,7 @@
+require "etc"
+require "net/http"
+require "uri"
+
 class Dupcheck < Formula
   desc "A duplicate file discovery tool written in Rust."
   homepage "https://github.com/keaz/rust-duplicate-file-detector"
@@ -11,13 +15,32 @@ class Dupcheck < Formula
     if ENV["SHELL"].include?("zsh")
       real_home = ENV["HOMEBREW_REAL_HOME"] || Etc.getpwuid.dir
       zshrc_path = File.join(real_home, ".zshrc")
+      zfunc_path = File.join(real_home, ".zfunc")
 
-      system "mkdir", "-p" , "~/.zfunc"
-      system "curl", "-o", "~/.zfunc/_duplicate-checker", "https://raw.githubusercontent.com/keaz/rust-duplicate-file-detector/refs/heads/main/.zfunc/_duplicate-checker"
-      
       zshrc_content = File.read(zshrc_path)
       compinit_line = "autoload -Uz compinit && compinit"
       fpath_line = "fpath=(~/.zfunc $fpath)"
+      zfunc_file_url = "https://raw.githubusercontent.com/keaz/rust-duplicate-file-detector/refs/heads/main/.zfunc/_duplicate-checker"
+      zfunc_file_path = File.join(zfunc_path, "_duplicate-checker")
+
+      # Ensure the .zfunc directory exists
+      unless Dir.exist?(zfunc_path)
+        Dir.mkdir(zfunc_path)
+        puts "Created directory: #{zfunc_path}"
+      else
+        puts "Directory already exists: #{zfunc_path}"
+      end
+
+      # Download and save the _duplicate-checker file
+      uri = URI(zfunc_file_url)
+      response = Net::HTTP.get_response(uri)
+
+      if response.is_a?(Net::HTTPSuccess)
+        File.write(zfunc_file_path, response.body)
+        puts "Downloaded and saved _duplicate-checker to #{zfunc_file_path}."
+      else
+        puts "Failed to download _duplicate-checker. HTTP Status: #{response.code}"
+      end
 
       unless zshrc_content.include?(fpath_line)
         File.open(zshrc_path, "a") do |file|
