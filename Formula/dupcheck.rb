@@ -11,8 +11,12 @@ class Dupcheck < Formula
     if ENV["SHELL"].include?("zsh")
       system "mkdir", "-p" , "~/.zfunc"
       system "curl", "-o", "~/.zfunc/_duplicate-checker", "https://raw.githubusercontent.com/keaz/rust-duplicate-file-detector/refs/heads/main/.zfunc/_duplicate-checker"
-      system "echo 'fpath=(~/.zfunc $fpath)' >> ~/.zshrc"
-      system "echo 'autoload -Uz compinit && compinit' >> ~/.zshrc"
+      unless File.readlines("#{ENV["HOME"]}/.zshrc").grep(/fpath=\(~\/.zfunc \$fpath\)/).any?
+        system "echo 'fpath=(~/.zfunc $fpath)' >> ~/.zshrc"
+      end
+      unless File.readlines("#{ENV["HOME"]}/.zshrc").grep(/autoload -Uz compinit && compinit/).any?
+        system "echo 'autoload -Uz compinit && compinit' >> ~/.zshrc"
+      end
     elsif ENV["SHELL"].include?("bash")
       system "#{bin}/duplicate-checker", "completion", "bash"
     else
